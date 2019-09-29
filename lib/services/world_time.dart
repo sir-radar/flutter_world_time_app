@@ -8,6 +8,7 @@ class WorldTime {
  String time;
  String flag;
  String url;
+ bool isDaytime = false;
 
  WorldTime({this.location, this.flag, this.url});
 
@@ -17,7 +18,6 @@ class WorldTime {
 
     Response response = await get('https://worldtimeapi.org/api/timezone/$url');
     Map data = jsonDecode(response.body);
-    // print(data);
 
     //get properies from data
 
@@ -28,6 +28,8 @@ class WorldTime {
 
     DateTime now = DateTime.parse(datetime);
     now = now.add(Duration(hours: int.parse(offset)));
+
+    isDaytime = now.hour > 6 && now.hour < 20 ? true : false;
 
     time = DateFormat.jm().format(now);
 
